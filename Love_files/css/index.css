@@ -115,6 +115,8 @@ body{
     background-color: #efefef;
     height: 100px;
     overflow: hidden;
+    position: static;
+    bottom: 0;
 }
 .foot-content{
     color: #999;

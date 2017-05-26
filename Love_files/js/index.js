@@ -1,4 +1,8 @@
 $(function() {
+    if ((navigator.userAgent.match(/(iPhone|iPod|Android|ios|iPad)/i))){
+        $('#main').css('marginTop','400px')
+        $('.login-out').css('fontSize','30px')
+    }
     var draw = function(){
         var width = canvas.width();
         var height = canvas.height();
@@ -152,7 +156,7 @@ $(function() {
 
         runAsync().start(); 
     }
-    
+
     var canvas = $('#canvas');
 
     if (!canvas[0].getContext) {

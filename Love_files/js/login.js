@@ -2,6 +2,11 @@
  * Created by admin on 2017/5/25.
  */
 $(function() {
+    if ((navigator.userAgent.match(/(iPhone|iPod|Android|ios|iPad)/i))){
+        $('.foot').css('position','absolute')
+        $('.container').css('marginBottom', '120px')
+        console.log(11)
+    }
     $('.btn').on('click',function(){
         var val = $('.ipt').val();
         if(val.trim() === ''){
