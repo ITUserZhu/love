@@ -22,7 +22,6 @@ $(function() {
         switch ($(target).get(0).tagName){
           case 'IMG':
             $('.box').fadeIn(400)
-            console.log(111)
             $('.img-wrapper').empty().append('<li class="item"><img src=' + $(target).attr("src") + ' alt=""></li>')
             break;
           default:
