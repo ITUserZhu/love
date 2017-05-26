@@ -5,9 +5,28 @@ $(function() {
       $.each(data.results, function(index, item) {
         $('<li class="swiper-slide"><img src=' + item.url + ' alt=""></li>').appendTo('.swiper-wrapper')
       })
+      var $_slider = $('.swiper-slide')
       var mySwiper = new Swiper('.swiper-container', {
         slidesPerView: 4,
         spaceBetween: 20,
+      })
+      $(document).on('click',function(e){
+        var target = e.target
+        switch ($(target).get(0).tagName){
+          case 'IMG':
+            $('.box').fadeIn(400)
+            console.log(111)
+            $('.img-wrapper').empty().append('<li class="item"><img src=' + $(target).attr("src") + ' alt=""></li>')
+            break;
+          case 'LI':
+            $('.box').fadeIn(400)
+            $('.img-wrapper').empty().append('<li class="item"><img src=' + $(target).css('backgroundImage').replace('url(','').replace(')', '') + ' alt=""></li>')
+            break;
+          default:
+            $('.box').fadeOut()
+        } 
+        
+
       })
     }
   })
