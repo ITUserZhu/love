@@ -1,53 +1,88 @@
-$(function(){
+$(function() {
   $.ajax({
     url: 'https://gank.io/api/data/福利/10/1',
     success: function(data) {
       $.each(data.results, function(index, item) {
-        $('<li class="swiper-slide"><img src='+ item.url +' alt=""></li>').appendTo('.swiper-wrapper')
+        $('<li class="swiper-slide"><img src=' + item.url + ' alt=""></li>').appendTo('.swiper-wrapper')
       })
       var mySwiper = new Swiper('.swiper-container', {
-        slidesPerView : 4,
-        spaceBetween : 20,
+        slidesPerView: 4,
+        spaceBetween: 20,
       })
     }
   })
-  
-  var oL = $('#wrap ul li').size();
-  var Deg = 360/oL;
-  var xDeg = 0,yDeg = -10,xs,ys,p=null;
 
-  for (var i=oL-1;i>=0;i--)
-  {
-    
+  var oL = $('#wrap ul li').size();
+  var Deg = 360 / oL;
+  var xDeg = 0,
+    yDeg = -10,
+    xs, ys, p = null;
+
+  for (var i = oL - 1; i >= 0; i--) {
+
     $('#wrap ul li').eq(i).css({
-      transition:"1s "+(oL-i)*0.15+"s transform,.5s "+(1+oL*0.15)+"s opacity",
-      'transform':'rotateY('+Deg*i+'deg) translateZ(350px)'
+      transition: "1s " + (oL - i) * 0.15 + "s transform,.5s " + (1 + oL * 0.15) + "s opacity",
+      'transform': 'rotateY(' + Deg * i + 'deg) translateZ(350px)'
     });
   }
-    
-  
-  $('.wrapper').mousedown(function(e){
-    clearInterval(p);
-    var x1 = e.clientX;
-    var y1 = e.clientY;
-    $(this).bind('mousemove',function(e){
-      xs = e.clientX - x1;
-      ys = e.clientY - y1;
-      x1 = e.clientX;
-      y1 = e.clientY;
-      xDeg += xs*0.3;
-      yDeg -= ys*0.1;
-      $('#wrap').css('transform',"perspective(800px) rotateX("+yDeg+"deg) rotateY("+xDeg+"deg)");
+
+  if ((navigator.userAgent.match(/(iPhone|iPod|Android|ios|iPad)/i))) { //跳到手机端
+    $('.wrapper').on('touchstart', (function(e) {
+      clearInterval(p);
+      var x1 = e.originalEvent.targetTouches[0].pageX;
+      var y1 = e.originalEvent.targetTouches[0].pageY;
+      $(this).bind('touchmove', function(e) {
+        console.log(12)
+        xs = e.originalEvent.targetTouches[0].pageX - x1;
+        ys = e.originalEvent.targetTouches[0].pageY - y1;
+        x1 = e.originalEvent.targetTouches[0].pageX;
+        y1 = e.originalEvent.targetTouches[0].pageY;
+
+        xDeg += xs * 0.3;
+        yDeg -= ys * 0.1;
+        $('#wrap').css('transform', "perspective(800px) rotateX(" + yDeg + "deg) rotateY(" + xDeg + "deg)");
+      });
+    })).on('touchend', (function() {
+      $(this).unbind('touchmove');
+      p = setInterval(function() {
+        if (Math.abs(xs) < 0.5 && Math.abs(ys) < 0.5) {
+          clearInterval(p)
+        };
+        xs = xs * 0.95;
+        ys = ys * 0.95
+        xDeg += xs * 0.3;
+        yDeg -= ys * 0.1;
+        $('#wrap').css('transform', "perspective(800px) rotateX(" + yDeg + "deg) rotateY(" + xDeg + "deg)");
+      }, 30);
+    }));
+
+  } else {
+    $('.wrapper').mousedown(function(e) {
+      clearInterval(p);
+      var x1 = e.clientX;
+      var y1 = e.clientY;
+      $(this).bind('mousemove', function(e) {
+        xs = e.clientX - x1;
+        ys = e.clientY - y1;
+        x1 = e.clientX;
+        y1 = e.clientY;
+        xDeg += xs * 0.3;
+        yDeg -= ys * 0.1;
+        $('#wrap').css('transform', "perspective(800px) rotateX(" + yDeg + "deg) rotateY(" + xDeg + "deg)");
+      });
+    }).mouseup(function() {
+      $(this).unbind('mousemove');
+      p = setInterval(function() {
+        if (Math.abs(xs) < 0.5 && Math.abs(ys) < 0.5) {
+          clearInterval(p)
+        };
+        xs = xs * 0.95;
+        ys = ys * 0.95
+        xDeg += xs * 0.3;
+        yDeg -= ys * 0.1;
+        $('#wrap').css('transform', "perspective(800px) rotateX(" + yDeg + "deg) rotateY(" + xDeg + "deg)");
+      }, 30);
     });
-  }).mouseup(function(){
-    $(this).unbind('mousemove');
-    p = setInterval(function(){
-      if(Math.abs(xs)<0.5&&Math.abs(ys)<0.5){clearInterval(p)};
-      xs = xs*0.95;
-      ys = ys*0.95
-      xDeg += xs*0.3;
-      yDeg -= ys*0.1;
-      $('#wrap').css('transform',"perspective(800px) rotateX("+yDeg+"deg) rotateY("+xDeg+"deg)");
-    },30);
-  });
+  }
+
 });
