@@ -79,7 +79,6 @@ $(function() {
           var x1 = e.originalEvent.targetTouches[0].pageX;
           var y1 = e.originalEvent.targetTouches[0].pageY;
           $(this).bind('touchmove', function(e) {
-            console.log(12)
             xs = e.originalEvent.targetTouches[0].pageX - x1;
             ys = e.originalEvent.targetTouches[0].pageY - y1;
             x1 = e.originalEvent.targetTouches[0].pageX;
