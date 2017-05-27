@@ -28,7 +28,7 @@ $(function() {
             },2000);
         }else{
             $('.warn').fadeIn(400).html('请稍等...');
-            setTimeout(function(){
+            setTimeout(function(){  
                 $('.warn').html('对不起,你看不了 - -!!');
             },1000)
         }
