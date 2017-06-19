@@ -1,63 +1,73 @@
 $(function() {
-  var num = 1
+  var num = 10,
+      i = 1;
   $('img').eq(0).on('mousedown',function(e){
-    e.preventDefault()  
-  })
+    e.preventDefault()
+  });
   $('.check').on('click',function(){
-    $('.swiper-wrapper').empty()
-    num++;
+    $('.swiper-wrapper').empty();
+    i++;
     $.ajax({
-    url: 'https://gank.io/api/data/福利/12/' + num,
+    type: "GET",
+    url: './../data.json',
+    dataType: "json",
     success: function(data) {
       $.each(data.results, function(index, item) {
-        $('<li class="swiper-slide"><img src=' + item.url + ' alt=""></li>').appendTo('.swiper-wrapper')
-      })
-      var $_slider = $('.swiper-slide')
+        if(index < num * i && index > num * (i-1) ){
+          $('<li class="swiper-slide"><img src=' + item.url + ' alt=""></li>').appendTo('.swiper-wrapper')
+        }
+      });
+      var $_slider = $('.swiper-slide');
       mySwiper = new Swiper('.swiper-container', {
         slidesPerView: 4,
-        spaceBetween: 20,
-      })
+        spaceBetween: 20
+      });
       $(document).on('click',function(e){
-        var target = e.target
+        var target = e.target;
         switch ($(target).get(0).tagName){
           case 'IMG':
-            $('.box').fadeIn(400)
+            $('.box').fadeIn(400);
             $('.img-wrapper').empty().append('<li class="item"><img src=' + $(target).attr("src") + ' alt=""></li>')
             break;
           default:
             $('.box').fadeOut()
-        } 
+        }
       })
     }
   })
-  })
+  });
 
   $.ajax({
-    url: 'https://gank.io/api/data/福利/12/' + num,
+    type: "GET",
+    url: './../data.json',
+    dataType: "json",
     success: function(data) {
       $.each(data.results, function(index, item) {
-        $('<li class="swiper-slide"><img src=' + item.url + ' alt=""></li>').appendTo('.swiper-wrapper')
-        $('<li clsss="wrapper-item"><img src='+ item.url +' ondragstart="return false;"></li>').appendTo('.wrapper-item')
-      })
-      var $_slider = $('.swiper-slide')
+        if(index<10){
+          $('<li class="swiper-slide"><img src=' + item.url + ' alt=""></li>').appendTo('.swiper-wrapper');
+          $('<li clsss="wrapper-item"><img src='+ item.url +' ondragstart="return false;"></li>').appendTo('.wrapper-item')
+        }
+      });
+      var $_slider = $('.swiper-slide');
       var mySwiper = new Swiper('.swiper-container', {
         slidesPerView: 4,
         spaceBetween: 20,
-      })
+        autoplay : 5000
+      });
       $(document).on('click',function(e){
-        var target = e.target
+        var target = e.target;
         switch ($(target).get(0).tagName){
           case 'IMG':
-            $('.box').fadeIn(400)
+            $('.box').fadeIn(400);
             $('.img-wrapper').empty().append('<li class="item"><img src=' + $(target).attr("src") + ' alt=""></li>')
             break;
           default:
-            $('.box').fadeOut()
+            $('.box').fadeOut();
             break;
-        } 
+        }
       })
 
-      
+
 
       var oL = $('#wrap ul li').size();
       var Deg = 360 / oL;
@@ -131,11 +141,10 @@ $(function() {
         });
       }
 
+    },
+    error: function(error) {
+          console.log(error)
     }
   })
-
-
-
-  
 
 });

@@ -129,3 +129,12 @@ body{
    font-size: 16px;
    line-height: 2em;
 }
+.ask{
+    animation:fadeInLeft 1s 2.2s ease both;
+}
+@keyframes fadeInLeft{
+    0%{opacity:0;
+        transform:translateX(-20px)}
+    100%{opacity:1;
+        transform:translateX(0)}
+}
